@@ -5,13 +5,15 @@ import FileUtil from "./utils/FileUtil"
 import PrintUtil from "./utils/PrintUtil"
 import SelectorFilter from "./SelectorFilter"
 import { getAllWordsInContent } from "./utils/ExtractWordsUtil"
+import ReportUtil from "./utils/ReportUtil";
 
 const OPTIONS = {
     output: false,
     minify: false,
     info: false,
     rejected: false,
-    rejectedReport: false,
+    rejectedOutput: false,
+    rejectedInCb: false,
     whitelist: [],
     cleanCssOptions: {}
 }
@@ -56,9 +58,9 @@ const purify = (searchThrough, css, options, callback) => {
 
     // Option rejected = true
     if (options.rejected && selectorFilter.rejectedSelectors.length) {
-        if (options.rejectedReport) {
-            const report = `${selectorFilter.rejectedSelectors.join("\n")}`;
-            fs.writeFileSync(options.rejectedReport, report, (err) => { // TODO: Use writeFile?
+        if (options.rejectedOutput) {
+            const report = ReportUtil.getNewlineReport(selectorFilter.rejectedSelectors);
+            fs.writeFile(options.rejectedReport, report, (err) => {
                 if (err) return err;
             });
         } else {
@@ -70,8 +72,11 @@ const purify = (searchThrough, css, options, callback) => {
         fs.writeFile(options.output, source, err => {
             if (err) return err
         })
+    } else if (options.reportInCb) {
+        const report = ReportUtil.getNewlineReport(selectorFilter.rejectedSelectors);
+        return callback ? callback({source, report}) : source
     } else {
-        return callback ? callback(source) : source
+        return callback ? callback(source) : source;
     }
 }
 

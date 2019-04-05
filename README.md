@@ -238,7 +238,9 @@ purify(content, css, options, callback);
 
 * **`rejected:`** Logs the CSS rules that were removed if `true`. Default: `false`.
 
-* **`rejectedReport`** Filepath to write rejected css selectors to if `true`. Default: `false`.
+* **`rejectedOutput:`** Filepath to write rejected css selectors to if `true` and `rejected: true`. Default: `false`.
+
+* **`rejectedInCb:`** Returns list of rejected CSS classes in the callback function if `true`. Default: `false` .
 
 * **`whitelist`** Array of selectors to always leave in. Ex. `['button-active', '*modal*']` this will leave any selector that includes `modal` in it and selectors that match `button-active`. (wrapping the string with *'s, leaves all selectors that include it)
 
