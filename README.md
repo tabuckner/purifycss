@@ -1,10 +1,8 @@
-# PurifyCSS  
+# PurifyCSS-Report
 
-[![Travis](https://img.shields.io/travis/purifycss/purifycss/master.svg)]()
-[![npm](https://img.shields.io/npm/dm/purify-css.svg)]()
-[![David](https://img.shields.io/david/purifycss/purifycss.svg)]()
-![Join the chat at https://gitter.im/purifycss/purifycss](https://badges.gitter.im/purifycss/purifycss.svg)
+A tiny change to the very popular [PurifyCSS](https://github.com/purifycss/purifycss) library. We've added a new config option to make reporting on what classes are being 'rejected' easier.
 
+## PurifyCSS Documentation (updated for this fork's changes)
 
 A function that takes content (HTML/JS/PHP/etc) and CSS, and returns only the **used CSS**.  
 PurifyCSS does not modify the original CSS files. You can write to a new file, like minification.  
@@ -239,6 +237,8 @@ purify(content, css, options, callback);
 * **`info:`** Logs info on how much CSS was removed if `true`. Default: `false`.
 
 * **`rejected:`** Logs the CSS rules that were removed if `true`. Default: `false`.
+
+* **`rejectedReport`** Filepath to write rejected css selectors to if `true`. Default: `false`.
 
 * **`whitelist`** Array of selectors to always leave in. Ex. `['button-active', '*modal*']` this will leave any selector that includes `modal` in it and selectors that match `button-active`. (wrapping the string with *'s, leaves all selectors that include it)
 

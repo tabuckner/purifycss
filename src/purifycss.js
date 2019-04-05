@@ -11,6 +11,7 @@ const OPTIONS = {
     minify: false,
     info: false,
     rejected: false,
+    rejectedReport: false,
     whitelist: [],
     cleanCssOptions: {}
 }
@@ -55,7 +56,14 @@ const purify = (searchThrough, css, options, callback) => {
 
     // Option rejected = true
     if (options.rejected && selectorFilter.rejectedSelectors.length) {
-        PrintUtil.printRejected(selectorFilter.rejectedSelectors)
+        if (options.rejectedReport) {
+            const report = `${selectorFilter.rejectedSelectors.join("\n")}`;
+            fs.writeFileSync(options.rejectedReport, report, (err) => { // TODO: Use writeFile?
+                if (err) return err;
+            });
+        } else {
+            PrintUtil.printRejected(selectorFilter.rejectedSelectors)
+        }
     }
 
     if (options.output) {
